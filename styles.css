@@ -1,22 +1,24 @@
 .container{
-    max-width: 400px;
+    max-width: 800px;
     margin: 10vh auto 0 auto;
 }
 
 .calculator-body{
-   
+    background-color: rgb(36, 38, 38);
+    padding: 60px;
+    border-radius: 30px;
 }
 
 .calc-display{
-    border: solid 2px rebeccapurple;
+    border: solid 2px rgb(0, 0, 0);
     border-radius: 10px;
-    background-color: salmon;
+    background-color: lightgray;
     text-align: right;
-    line-height: 70px;
-    height: 70px;
+    line-height: 100px;
+    height: 100px;
     padding: 16px 8px;
     font-size: 25px;
-    margin-bottom: 20px;
+    margin-bottom: 50px;
 }
 
 .buttons{
@@ -28,11 +30,42 @@
 
 
 button{
-    border: 0.5px solid #999;
-    border-radius: 40px;
+    background-color: rgba(89, 89, 89, 0.682);
+    color: white;
+    font-size: 40px;
+    border: rgb(248, 246, 246);
+    border-radius: 48px;
     line-height: 100px;
     text-align: center;
     cursor: pointer;
 }
 
+.equals-btn{
+    background-color: rgb(130, 255, 47);
+}
+
+.add-btn{
+    color: white;
+    font-size: 40px;
+    grid-row-start: 3;
+    grid-row-end: 5;
+    grid-column-end: 5;
+}
+
+.add-btn, .minus-btn, .multiply-btn, .divid-btn {
+    background-color: rgb(255, 145, 0)
+}
+.clear-btn{
+    background-color: rgb(211, 44, 44);
+}
+
+.bkspc-btn{
+    background-color: rgb(227, 83, 83);
+}
+
+
+.zero-btn{
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
     
