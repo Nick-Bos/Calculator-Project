@@ -17,7 +17,7 @@
     height: 100px;
     padding: 16px 8px;
     font-size: 70px;
-    font-family: Impact, 'Arial Narrow Bold', sans-serif;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     margin-bottom: 50px;
 }
 
@@ -52,7 +52,7 @@ button{
     grid-column-end: 5;
 }
 
-#add-btn, .minus-btn, .multiply-btn, .divid-btn {
+#add-btn, #minus-btn, #multiply-btn, #divide-btn {
     background-color: rgb(255, 145, 0)
 }
 #clear-btn{
