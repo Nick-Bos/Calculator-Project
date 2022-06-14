@@ -1,28 +1,27 @@
-function add(a, b) {
+let display = document.getElementById("calc-display");
+const add = (a, b) => {
   return a + b;
-}
+};
 
-function subtract(a, b) {
+const subtract = (a, b) => {
   return a - b;
-}
+};
 
-function multiply(a, b) {
+const multiply = (a, b) => {
   return a * b;
-}
+};
 
-function divide(a, b) {
+const divide = (a, b) => {
   return a / b;
-}
+};
 
-//numberBtn functions
-function numInput(e) {
+//numberBtn function displays numbers as they are selected
+const numInput = (e) => {
   newstart();
   let display = document.getElementById("calc-display");
   let obj = e.target;
   display.textContent += obj.textContent;
-}
-
-let display = document.getElementById("calc-display");
+};
 
 //numbers
 let num0 = document.getElementById("zero-btn");
@@ -47,12 +46,66 @@ num7.addEventListener("click", numInput);
 num8.addEventListener("click", numInput);
 num9.addEventListener("click", numInput);
 
-//symbolBtn function
-function symbolInput(e) {
+//symbolBtn function displays symbols as they are selected
+const symbolInput = (e) => {
   let display = document.getElementById("calc-display");
   let obj = e.target;
-  display.textContent += obj.textContent;
-}
+
+  if (
+    display.textContent == "+" ||
+    display.textContent == "-" ||
+    display.textContent == "\367" ||
+    display.textContent == "x"
+  ) {
+    display.textContent += obj.textContent;
+  } else {
+    display.textContent = obj.textContent;
+  }
+};
+//calculate function collects the first number, second number and operator and stores them ready for calculation
+const firstNumber = () => {
+  if (display != "") {
+    firstNum = display.textContent;
+  }
+  let firstNumFiltArr = firstNum.match(/([0-9])\d*/g);
+  let firstNumFiltStr = firstNumFiltArr[0];
+  let firstNumFiltNum = parseInt(firstNumFiltStr);
+  return firstNumFiltNum;
+};
+
+const operandStore = (e) => {
+  let obj = e.target;
+  let selectedOperand = obj.textContent; // not reading text content???
+  console.log(obj.textContent);
+  if (selectedOperand == "+") {
+    return add;
+  } else if (selectedOperand == "-") {
+    return subtract;
+  } else if (selectedOperand == "\367") {
+    return divide;
+  } else {
+    return multiply;
+  }
+};
+
+const operate = (operator, a, b) => {
+  return operator(a, b);
+};
+
+// equals
+const equals = () => {
+  secondNum = display.textContent;
+  console.log(display.textContent);
+  let secondNumFiltArr = secondNum.match(/([0-9])\d*/g);
+  let secondNumFiltStr = secondNumFiltArr[0];
+  let secondNumFiltNum = parseInt(secondNumFiltStr);
+  let operator = operandStore;
+  let a = firstNumber;
+  let b = secondNumFiltNum;
+  operate(operator, a, b);
+};
+let equalsBtn = document.getElementById("equals-btn");
+equalsBtn.addEventListener("click", equals);
 
 //symbols
 let operandMultiply = document.getElementById("multiply-btn");
@@ -60,30 +113,23 @@ let operandDivide = document.getElementById("divide-btn");
 let operandSubtract = document.getElementById("minus-btn");
 let operandAdd = document.getElementById("add-btn");
 let decimal = document.getElementById("decimal-btn");
+//
+
+operandAdd.addEventListener("click", firstNumber);
 operandAdd.addEventListener("click", operandStore);
-operandAdd.addEventListener("click", operatorBtnFirstNum);
 operandAdd.addEventListener("click", symbolInput);
-operandMultiply.addEventListener("click", operatorBtnFirstNum);
-operandSubtract.addEventListener("click", operatorBtnFirstNum);
-operandDivide.addEventListener("click", operatorBtnFirstNum);
+operandMultiply.addEventListener("click", operandStore);
+operandMultiply.addEventListener("click", firstNumber);
+operandMultiply.addEventListener("click", symbolInput);
+operandSubtract.addEventListener("click", operandStore);
+operandSubtract.addEventListener("click", firstNumber);
+operandSubtract.addEventListener("click", symbolInput);
+operandDivide.addEventListener("click", operandStore);
+operandDivide.addEventListener("click", firstNumber);
+operandDivide.addEventListener("click", symbolInput);
 decimal.addEventListener("click", symbolInput);
 
-//operatorBtn
-function operatorBtnFirstNum() {
-  if (display != "") {
-    firstNum = display.textContent;
-  }
-  let firstNumFiltArr = firstNum.match(/([0-9])\d*/g);
-  let firstNumFiltStr = firstNumFiltArr[0];
-  let firstNumFiltNum = parseInt(firstNumFiltStr);
-  console.log(firstNumFiltNum);
-}
-
-function operandStore() {
-  console.log("clicked");
-}
-
-//clear function
+//clear function clears the display back to the default of "0"
 function clear() {
   display.textContent = "";
   display.textContent = 0;
@@ -92,30 +138,18 @@ function clear() {
 let clearBtn = document.getElementById("clear-btn");
 clearBtn.addEventListener("click", clear);
 
-//newstart func
+//newstart function clears the display when a new number is being input
 function newstart() {
-  if (display.textContent == 0) {
+  if (display.textContent === "0") {
+    display.textContent = "";
+  } else if (
+    display.textContent === "+" ||
+    display.textContent === "-" ||
+    display.textContent === "\367" ||
+    display.textContent === "x"
+  ) {
     display.textContent = "";
   }
 }
 
-function operate(operator, a, b) {
-  return operator(a, b);
-}
-
-const test = (op, a, b) => {
-  return op(a, b);
-};
-
-// equals
-function equals() {
-  operate(operator, a, b);
-}
-
-function singleOperate() {}
-
 //equalsBtn
-let equalsBtn = document.getElementById("equals-btn");
-equalsBtn.addEventListener("click", equals);
-
-//WRITE ONE BIG FUNCTION FOR THE EVEMT LISTENER
