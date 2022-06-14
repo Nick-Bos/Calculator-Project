@@ -60,12 +60,12 @@ let operandDivide = document.getElementById("divide-btn");
 let operandSubtract = document.getElementById("minus-btn");
 let operandAdd = document.getElementById("add-btn");
 let decimal = document.getElementById("decimal-btn");
-
-operandAdd.addEventListener("click", symbolInput);
+operandAdd.addEventListener("click", operandStore);
 operandAdd.addEventListener("click", operatorBtnFirstNum);
-operandMultiply.addEventListener("click", symbolInput);
-operandSubtract.addEventListener("click", symbolInput);
-operandDivide.addEventListener("click", symbolInput);
+operandAdd.addEventListener("click", symbolInput);
+operandMultiply.addEventListener("click", operatorBtnFirstNum);
+operandSubtract.addEventListener("click", operatorBtnFirstNum);
+operandDivide.addEventListener("click", operatorBtnFirstNum);
 decimal.addEventListener("click", symbolInput);
 
 //operatorBtn
@@ -77,6 +77,10 @@ function operatorBtnFirstNum() {
   let firstNumFiltStr = firstNumFiltArr[0];
   let firstNumFiltNum = parseInt(firstNumFiltStr);
   console.log(firstNumFiltNum);
+}
+
+function operandStore() {
+  console.log("clicked");
 }
 
 //clear function
@@ -105,8 +109,10 @@ const test = (op, a, b) => {
 
 // equals
 function equals() {
-  operate;
+  operate(operator, a, b);
 }
+
+function singleOperate() {}
 
 //equalsBtn
 let equalsBtn = document.getElementById("equals-btn");
