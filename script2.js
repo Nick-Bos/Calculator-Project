@@ -1,38 +1,44 @@
 const calc = {
   displayValue: "0",
-  fistInput: null,
+  firstInput: null,
   waitForSecondInput: false,
   operator: null,
 };
+function updateDisplayOp() {
+  const display = document.querySelector(".calc-display");
+  display.textContent = calc.operator;
+}
 
 function updateDisplay() {
   const display = document.querySelector(".calc-display");
-  display.value = calc.displayValue;
+  display.textContent = calc.displayValue;
 }
 updateDisplay();
 
 //statement to filter what button is pressed
 const keys = document.querySelector(".calc-buttons");
 
-keys.addEventListener("click", (e) => {
-  const selected = e;
-  if (!selected.matches("button")) {
+keys.addEventListener("click", (event) => {
+  const selected = event.target;
+  if (!selected.closest("button")) {
     return;
   }
   if (selected.classList.contains("operator")) {
-    console.log("operator", selected.value);
+    manageOperator(selected.textContent);
+    updateDisplayOp();
     return;
   }
   if (selected.classList.contains("decimal")) {
-    inputDecimal(selected.value);
+    inputDecimal(selected.textContent);
     updateDisplay();
     return;
   }
   if (selected.classList.contains("clear")) {
-    console.log("clear", selected.value);
+    console.log("clear", selected.textContent);
+    clear();
     return;
   } else {
-    inputNumber(choosen.value);
+    inputNumber(selected.textContent);
     updateDisplay();
   }
 });
@@ -57,13 +63,24 @@ function inputDecimal(val) {
   }
 }
 
-//managing operators
+//handling operators
 function manageOperator(Oper) {
-  const { fistInput, displayValue, operator } = calc;
+  const { firstInput, displayValue, operator } = calc;
   const input = parseFloat(displayValue);
-  if (fistInput === null) {
-    calc.fistInput = input;
+  if (firstInput === null) {
+    calc.firstInput = input;
+  } else if (operator) {
+    const output = performCalc[operator](firstInput, input);
+    calc.displayValue = string(output);
   } else calc.waitForSecondInput = true;
   calc.operator = Oper;
+  console.log(calc);
 }
-//change button class to groups
+
+const performCalc = {
+  "/": (firstInput, secondInput) => firstInput / secondInput,
+  "*": (firstInput, secondInput) => firstInput * secondInput,
+  "+": (firstInput, secondInput) => firstInput + secondInput,
+  "-": (firstInput, secondInput) => firstInput - secondInput,
+  "=": (firstInput, secondInput) => secondInput,
+};
