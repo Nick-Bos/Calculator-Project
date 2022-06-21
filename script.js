@@ -1,19 +1,9 @@
+let valueOne = 0;
+let valueTwo = 0;
+let selectedOp = "";
+let returnValue = "";
+
 let display = document.getElementById("calc-display");
-const add = (a, b) => {
-  return a + b;
-};
-
-const subtract = (a, b) => {
-  return a - b;
-};
-
-const multiply = (a, b) => {
-  return a * b;
-};
-
-const divide = (a, b) => {
-  return a / b;
-};
 
 //numberBtn function displays numbers as they are selected
 const numInput = (e) => {
@@ -46,7 +36,7 @@ num7.addEventListener("click", numInput);
 num8.addEventListener("click", numInput);
 num9.addEventListener("click", numInput);
 
-//symbolBtn function displays symbols as they are selected
+//symbol function displays symbols as they are selected
 const symbolInput = (e) => {
   let display = document.getElementById("calc-display");
   let obj = e.target;
@@ -70,61 +60,62 @@ const firstNumber = () => {
   let firstNumFiltArr = firstNum.match(/([0-9])\d*/g);
   let firstNumFiltStr = firstNumFiltArr[0];
   let firstNumFiltNum = parseInt(firstNumFiltStr);
-  return firstNumFiltNum;
-};
-
-const operandStore = (e) => {
-  let obj = e.target;
-  let selectedOperand = obj.textContent; // not reading text content???
-  console.log(obj.textContent);
-  if (selectedOperand == "+") {
-    return add;
-  } else if (selectedOperand == "-") {
-    return subtract;
-  } else if (selectedOperand == "\367") {
-    return divide;
-  } else {
-    return multiply;
-  }
-};
-
-const operate = (operator, a, b) => {
-  return operator(a, b);
+  valueOne = firstNumFiltNum;
+  console.log("first", valueOne);
 };
 
 // equals
-const equals = () => {
+let equalsBtn = document.getElementById("equals-btn");
+equalsBtn.addEventListener("click", (e) => {
   secondNum = display.textContent;
-  console.log(display.textContent);
   let secondNumFiltArr = secondNum.match(/([0-9])\d*/g);
   let secondNumFiltStr = secondNumFiltArr[0];
   let secondNumFiltNum = parseInt(secondNumFiltStr);
-  let operator = operandStore;
-  let a = firstNumber;
-  let b = secondNumFiltNum;
-  operate(operator, a, b);
-};
-let equalsBtn = document.getElementById("equals-btn");
-equalsBtn.addEventListener("click", equals);
+  valueTwo = secondNumFiltNum;
+  console.log("Second", valueTwo);
+  operator = selectedOp;
+  a = valueOne;
+  b = valueTwo;
+  if (selectedOp == "+") {
+    returnValue = a + b;
+  } else if (selectedOp == "-") {
+    returnValue = a - b;
+  } else if (selectedOp == "\367") {
+    returnValue = a / b;
+  } else if (selectedOp == "x") {
+    returnValue = a * b;
+  }
+  display.textContent = returnValue;
+});
 
 //symbols
+let decimal = document.getElementById("decimal-btn");
 let operandMultiply = document.getElementById("multiply-btn");
 let operandDivide = document.getElementById("divide-btn");
 let operandSubtract = document.getElementById("minus-btn");
 let operandAdd = document.getElementById("add-btn");
-let decimal = document.getElementById("decimal-btn");
-//
+let operands = document.getElementById("buttons");
 
 operandAdd.addEventListener("click", firstNumber);
-operandAdd.addEventListener("click", operandStore);
+operands.addEventListener("click", (e) => {
+  if (e.target.textContent == "+") {
+    selectedOp = "+";
+  } else if (e.target.textContent == "-") {
+    selectedOp = "-";
+  } else if (e.target.textContent == "\367") {
+    selectedOp = "\367";
+  } else if (e.target.textContent == "x") {
+    selectedOp = "x";
+  } else {
+    return;
+  }
+  console.log(selectedOp);
+});
 operandAdd.addEventListener("click", symbolInput);
-operandMultiply.addEventListener("click", operandStore);
 operandMultiply.addEventListener("click", firstNumber);
 operandMultiply.addEventListener("click", symbolInput);
-operandSubtract.addEventListener("click", operandStore);
 operandSubtract.addEventListener("click", firstNumber);
 operandSubtract.addEventListener("click", symbolInput);
-operandDivide.addEventListener("click", operandStore);
 operandDivide.addEventListener("click", firstNumber);
 operandDivide.addEventListener("click", symbolInput);
 decimal.addEventListener("click", symbolInput);
@@ -138,6 +129,19 @@ function clear() {
 let clearBtn = document.getElementById("clear-btn");
 clearBtn.addEventListener("click", clear);
 
+//delete function deletes last digit when called
+let del = document.getElementById("del-btn");
+del.addEventListener("click", back);
+
+//working on delete button
+function back() {
+  let value = document.getElementById("calc-display").value;
+  console.log(value);
+  document.getElementById("calc-display").value = value.substr(
+    0,
+    value.length - 1
+  );
+}
 //newstart function clears the display when a new number is being input
 function newstart() {
   if (display.textContent === "0") {
@@ -151,5 +155,4 @@ function newstart() {
     display.textContent = "";
   }
 }
-
-//equalsBtn
+console.log();
