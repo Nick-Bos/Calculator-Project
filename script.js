@@ -106,10 +106,7 @@ operands.addEventListener("click", (e) => {
     selectedOp = "\367";
   } else if (e.target.textContent == "x") {
     selectedOp = "x";
-  } else {
-    return;
   }
-  console.log(selectedOp);
 });
 operandAdd.addEventListener("click", symbolInput);
 operandMultiply.addEventListener("click", firstNumber);
@@ -128,20 +125,34 @@ function clear() {
 //clearBtn
 let clearBtn = document.getElementById("clear-btn");
 clearBtn.addEventListener("click", clear);
-
+console.log(selectedOp);
 //delete function deletes last digit when called
 let del = document.getElementById("del-btn");
-del.addEventListener("click", back);
-
-//working on delete button
-function back() {
-  let value = document.getElementById("calc-display").value;
+del.addEventListener("click", (e) => {
+  let value = display.textContent;
   console.log(value);
-  document.getElementById("calc-display").value = value.substr(
-    0,
-    value.length - 1
-  );
-}
+  if (value == "0") {
+    return;
+  } else if (
+    value === "+" ||
+    value === "-" ||
+    value === "\367" ||
+    value === "x"
+  ) {
+    display.textContent = valueOne;
+  } else if (value == returnValue) {
+    clear();
+    // below not working, needed is if second value is 1 didgit then display last selected operator
+    //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+  } else if (value == valueTwo) {
+    display.textContent = selectedOp;
+    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  } else {
+    value = value.substring(0, value.length - 1);
+    display.textContent = value;
+  }
+});
+
 //newstart function clears the display when a new number is being input
 function newstart() {
   if (display.textContent === "0") {
@@ -155,4 +166,3 @@ function newstart() {
     display.textContent = "";
   }
 }
-console.log();
