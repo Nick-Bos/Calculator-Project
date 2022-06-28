@@ -3,6 +3,7 @@ let valueTwo = "";
 let prevVal = "";
 let operator = "";
 let temp = "";
+let counter = "";
 
 const buttons = document.getElementById("buttons");
 buttons.addEventListener("click", (e) => {
@@ -10,29 +11,31 @@ buttons.addEventListener("click", (e) => {
     clear();
   }
   if (e.target.textContent == "=") {
-    evaluate();
+    evaluate(operator, valueOne, valueTwo);
     currentValue();
+    // once equals pressed, value += disp.textcontent
     equalsDispUpdate();
+    operator = "";
   }
   if (e.target.textContent == "+") {
     operator = "+";
     updateDisplayOp(operator);
-    multiOp();
+    multiOp(operator, valueOne, valueTwo);
   }
   if (e.target.textContent == "-") {
     operator = "-";
     updateDisplayOp(operator);
-    multiOp();
+    multiOp(operator, valueOne, valueTwo);
   }
   if (e.target.textContent == "x") {
     operator = "x";
     updateDisplayOp(operator);
-    multiOp();
+    multiOp(operator, valueOne, valueTwo);
   }
   if (e.target.textContent == "\367") {
     operator = "\367";
     updateDisplayOp(operator);
-    multiOp();
+    multiOp(operator, valueOne, valueTwo);
   }
   if (e.target.textContent == "0") {
     temp = 0;
@@ -95,11 +98,10 @@ buttons.addEventListener("click", (e) => {
     storeValTwo();
   }
 
-  console.log(temp, "temp");
   console.log(valueOne, "value one");
+  console.log(operator);
   console.log(valueTwo, "value two");
   console.log(prevVal, "prevVal");
-  console.log(operator);
 });
 
 const display = document.getElementById("calc-display");
@@ -112,7 +114,6 @@ let updateDisplayNum = (input) => {
 let updateDisplayOp = (input) => {
   clearLast();
   let display = document.getElementById("calc-display");
-  let obj = input;
 
   if (
     display.textContent == "+" ||
@@ -120,9 +121,9 @@ let updateDisplayOp = (input) => {
     display.textContent == "\367" ||
     display.textContent == "x"
   ) {
-    display.textContent += obj.textContent;
+    display.textContent += input.textContent;
   } else {
-    display.textContent = obj.textContent;
+    display.textContent = input.textContent;
   }
   return (display.textContent += input);
 };
@@ -141,45 +142,48 @@ function clearLast() {
 
 function clear() {
   display.textContent = "0";
-  valueOne = 0;
-  valueTwo = 0;
+  valueOne = "";
+  valueTwo = "";
+  prevVal = "";
   operator = "";
+  counter = "";
 }
 
 //operate function returns selected operation output
-let operate = (a, b) => {
-  if (operator == "+") {
+let operate = (op, a, b) => {
+  if (op == "+") {
     return a + b;
   }
-  if (operator == "-") {
+  if (op == "-") {
     return a - b;
   }
-  if (operator == "x") {
+  if (op == "x") {
     return a * b;
   }
-  if (operator == "\367") {
+  if (op == "\367") {
     return a / b;
   }
 };
 //evaluate function parses the operate function and returns output
 let evaluate = (op, a, b) => {
-  op = operator;
-  a = valueOne;
-  b = valueTwo;
-  c = prevVal;
-  display.textContent = operate(a, b);
+  display.textContent = operate(op, a, b);
+};
+
+let multiEval = (op, a, b) => {
+  valueOne = operate(op, a, b);
 };
 
 //multiple operations at once
-let multiOp = () => {
-  if (operator != "" && valueOne != "" && valueTwo != "") {
-    valueOne = prevVal;
+let multiOp = (op, a, b) => {
+  if (op != "" && a != "" && b != "") {
+    multiEval(op, a, b);
+    counter++;
     console.log("works");
   }
 };
 
 let equalsDispUpdate = () => {
-  valueOne = prevVal;
+  valueOne = prevVal; //working here!!
 };
 //
 let currentValue = () => {
