@@ -1,6 +1,6 @@
-let valueOne = 0;
-let valueTwo = 0;
-let prevVal = 0;
+let valueOne = "";
+let valueTwo = "";
+let prevVal = "";
 let operator = "";
 let temp = "";
 
@@ -12,7 +12,7 @@ buttons.addEventListener("click", (e) => {
   if (e.target.textContent == "=") {
     evaluate();
     currentValue();
-    test();
+    equalsDispUpdate();
   }
   if (e.target.textContent == "+") {
     operator = "+";
@@ -171,9 +171,14 @@ let evaluate = (op, a, b) => {
 };
 
 //multiple operations at once
-let multiOp = () => {};
+let multiOp = () => {
+  if (operator != "" && valueOne != "" && valueTwo != "") {
+    valueOne = prevVal;
+    console.log("works");
+  }
+};
 
-let test = () => {
+let equalsDispUpdate = () => {
   valueOne = prevVal;
 };
 //
