@@ -1,6 +1,7 @@
 let valueOne = 0;
 let valueTwo = 0;
 let selectedOp = "";
+
 let returnValue = "";
 
 let display = document.getElementById("calc-display");
@@ -52,9 +53,9 @@ const symbolInput = (e) => {
     display.textContent = obj.textContent;
   }
 };
-//calculate function collects the first number, second number and operator and stores them ready for calculation
+
 const firstNumber = () => {
-  if (display != "") {
+  if (selectedOp == "") {
     firstNum = display.textContent;
   }
   let firstNumFiltArr = firstNum.match(/([0-9])\d*/g);
@@ -67,25 +68,19 @@ const firstNumber = () => {
 // equals
 let equalsBtn = document.getElementById("equals-btn");
 equalsBtn.addEventListener("click", (e) => {
+  // organise second num to be stored once second operator is clicked
+  // write statement re when second num is stored
+  // once second operator is pressed, result of equation becomes first value
+
   secondNum = display.textContent;
   let secondNumFiltArr = secondNum.match(/([0-9])\d*/g);
   let secondNumFiltStr = secondNumFiltArr[0];
   let secondNumFiltNum = parseInt(secondNumFiltStr);
   valueTwo = secondNumFiltNum;
   console.log("Second", valueTwo);
-  operator = selectedOp;
-  a = valueOne;
-  b = valueTwo;
-  if (selectedOp == "+") {
-    returnValue = a + b;
-  } else if (selectedOp == "-") {
-    returnValue = a - b;
-  } else if (selectedOp == "\367") {
-    returnValue = a / b;
-  } else if (selectedOp == "x") {
-    returnValue = a * b;
-  }
-  display.textContent = returnValue;
+
+  let result = evaluate(selectedOp, valueOne, valueTwo);
+  display.textContent = result;
 });
 
 //symbols
@@ -94,9 +89,11 @@ let operandMultiply = document.getElementById("multiply-btn");
 let operandDivide = document.getElementById("divide-btn");
 let operandSubtract = document.getElementById("minus-btn");
 let operandAdd = document.getElementById("add-btn");
-let operands = document.getElementById("buttons");
+
+let operands = document.getElementById("add-btn");
 
 operandAdd.addEventListener("click", firstNumber);
+//working on thisvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
 operands.addEventListener("click", (e) => {
   if (e.target.textContent == "+") {
     selectedOp = "+";
@@ -108,6 +105,7 @@ operands.addEventListener("click", (e) => {
     selectedOp = "x";
   }
 });
+//^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 operandAdd.addEventListener("click", symbolInput);
 operandMultiply.addEventListener("click", firstNumber);
 operandMultiply.addEventListener("click", symbolInput);
@@ -121,16 +119,18 @@ decimal.addEventListener("click", symbolInput);
 function clear() {
   display.textContent = "";
   display.textContent = 0;
+  valueOne = 0;
+  valueTwo = 0;
+  selectedOp = "";
 }
 //clearBtn
 let clearBtn = document.getElementById("clear-btn");
 clearBtn.addEventListener("click", clear);
-console.log(selectedOp);
+
 //delete function deletes last digit when called
 let del = document.getElementById("del-btn");
 del.addEventListener("click", (e) => {
   let value = display.textContent;
-  console.log(value);
   if (value == "0") {
     return;
   } else if (
@@ -142,11 +142,14 @@ del.addEventListener("click", (e) => {
     display.textContent = valueOne;
   } else if (value == returnValue) {
     clear();
-    // below not working, needed is if second value is 1 didgit then display last selected operator
-    //vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   } else if (value == valueTwo) {
+    value = value.substring(0, value.length - 1);
+    display.textContent = value;
+  }
+  if (value.toString().length <= 1 && value !== selectedOp) {
     display.textContent = selectedOp;
-    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  } else if (value == returnValue) {
+    clear();
   } else {
     value = value.substring(0, value.length - 1);
     display.textContent = value;
@@ -166,3 +169,20 @@ function newstart() {
     display.textContent = "";
   }
 }
+
+function evaluate(x, a, b) {
+  if (x == "+") {
+    returnValue = a + b;
+  } else if (x == "-") {
+    returnValue = a - b;
+  } else if (x == "\367") {
+    returnValue = a / b;
+  } else if (x == "x") {
+    returnValue = a * b;
+  }
+  return returnValue;
+}
+
+//write so it does all the work for you
+function operaterBtn() {}
+//calculate multiple operators at once
