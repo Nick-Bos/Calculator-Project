@@ -4,10 +4,6 @@ let prevVal = "";
 let operator = "";
 let temp = "";
 let counter = "";
-<<<<<<< HEAD
-=======
-let result = "";
->>>>>>> e4dcd93 (updated script)
 
 const buttons = document.getElementById("buttons");
 buttons.addEventListener("click", (e) => {
@@ -17,22 +13,14 @@ buttons.addEventListener("click", (e) => {
   if (e.target.textContent == "=") {
     evaluate(operator, valueOne, valueTwo);
     currentValue();
-<<<<<<< HEAD
     // once equals pressed, value += disp.textcontent
     equalsDispUpdate();
     operator = "";
-=======
-    equalsDispUpdate();
->>>>>>> e4dcd93 (updated script)
   }
   if (e.target.textContent == "+") {
     operator = "+";
     updateDisplayOp(operator);
     multiOp(operator, valueOne, valueTwo);
-<<<<<<< HEAD
-=======
-    multiEval2(operator, valueOne, valueTwo);
->>>>>>> e4dcd93 (updated script)
   }
   if (e.target.textContent == "-") {
     operator = "-";
@@ -182,28 +170,15 @@ let evaluate = (op, a, b) => {
 };
 
 let multiEval = (op, a, b) => {
-<<<<<<< HEAD
-  valueOne = operate(op, a, b);
-=======
   prevVal = operate(op, a, b);
 };
 
 let multiEval2 = (op, a, b) => {
   prevVal = operate(op, a, b);
->>>>>>> e4dcd93 (updated script)
 };
 
 //multiple operations at once
 let multiOp = (op, a, b) => {
-<<<<<<< HEAD
-  if (op != "" && a != "" && b != "") {
-    multiEval(op, a, b);
-    counter++;
-    console.log("works");
-  }
-};
-
-=======
   if (prevVal == "" && op != "" && a != "" && b != "") {
     multiEval(op, a, b);
 
@@ -219,7 +194,6 @@ let test = (op, a, b) => {
   result = operate(op, a, b);
   display.textContent = result;
 };
->>>>>>> e4dcd93 (updated script)
 let equalsDispUpdate = () => {
   valueOne = prevVal; //working here!!
 };
